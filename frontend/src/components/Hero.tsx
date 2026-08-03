@@ -3,7 +3,7 @@ import { motion } from "framer-motion";
 
 export default function Hero() {
   return (
-    <section className="relative w-full py-24 md:py-32 flex flex-col items-center text-center px-6 overflow-hidden">
+    <section className="relative w-full pt-32 pb-24 md:pt-40 md:pb-32 flex flex-col items-center text-center px-6 overflow-hidden">
       {/* Background Image with Overlay */}
       <div 
         className="absolute inset-0 z-0 opacity-70"

@@ -1,16 +1,30 @@
 "use client";
 
 import Link from "next/link";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Menu, X } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 
 export default function Navbar() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const [isScrolled, setIsScrolled] = useState(false);
+
+  useEffect(() => {
+    const handleScroll = () => {
+      setIsScrolled(window.scrollY > 10);
+    };
+    
+    window.addEventListener("scroll", handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
 
   return (
-    <nav className="w-full bg-background/80 backdrop-blur-md sticky top-0 z-50">
-      <div className="max-w-6xl mx-auto px-6 h-16 grid grid-cols-3 items-center">
+    <nav 
+      className={`w-full fixed top-0 z-50 transition-all duration-300 ${
+        isScrolled ? "bg-background/80 backdrop-blur-md" : "bg-transparent"
+      }`}
+    >
+      <div className="max-w-6xl mx-auto px-4 h-16 grid grid-cols-3 items-center">
         {/* Left: Links */}
         <div className="hidden md:flex items-center gap-8 text-sm font-medium text-gray-300 justify-start">
           <Link href="#features" className="hover:text-white transition-colors">Features</Link>
@@ -35,9 +49,6 @@ export default function Navbar() {
 
         {/* Right: CTA */}
         <div className="flex items-center gap-4 justify-end">
-          <Link href="/login" className="text-sm font-medium text-gray-300 hover:text-white transition-colors hidden lg:block">
-            Sign In
-          </Link>
           <button className="bg-primary hover:bg-primary-hover text-background text-xs font-semibold py-2 px-4 transition-colors">
             Connect GitHub
           </button>
