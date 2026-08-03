@@ -1,7 +1,11 @@
 "use client";
-import { motion } from "framer-motion";
+import { useState } from "react";
+import { motion, AnimatePresence } from "framer-motion";
+import { Plus } from "lucide-react";
 
 export default function FAQ() {
+  const [openIndex, setOpenIndex] = useState<number | null>(null);
+
   const faqs = [
     {
       question: "Is this just another BaaS like Firebase or Supabase?",
@@ -54,14 +58,43 @@ export default function FAQ() {
           initial="hidden"
           whileInView="visible"
           viewport={{ once: true }}
-          className="space-y-6"
+          className="flex flex-col"
         >
-          {faqs.map((faq, index) => (
-            <motion.div key={index} variants={itemVariants} className="bg-background p-6">
-              <h3 className="text-lg font-semibold mb-3 text-white">{faq.question}</h3>
-              <p className="text-gray-400 leading-relaxed">{faq.answer}</p>
-            </motion.div>
-          ))}
+          {faqs.map((faq, index) => {
+            const isOpen = openIndex === index;
+            
+            return (
+              <motion.div key={index} variants={itemVariants} className="bg-background mb-2 px-4 last:border-b-0">
+                <button 
+                  onClick={() => setOpenIndex(isOpen ? null : index)}
+                  className="w-full py-6 flex items-center justify-between text-left focus:outline-none group"
+                >
+                  <h3 className="text-lg font-semibold text-white group-hover:text-primary transition-colors">{faq.question}</h3>
+                  <motion.div
+                    className={`${isOpen ? "rotate-45" : ""} transition-all duration-300`}
+                  >
+                    <Plus className="text-gray-400 flex-shrink-0 ml-4 group-hover:text-primary transition-colors" />
+                  </motion.div>
+                </button>
+                
+                <AnimatePresence initial={false}>
+                  {isOpen && (
+                    <motion.div
+                      initial={{ height: 0, opacity: 0 }}
+                      animate={{ height: "auto", opacity: 1 }}
+                      exit={{ height: 0, opacity: 0 }}
+                      transition={{ duration: 0.3, ease: "easeInOut" }}
+                      className="overflow-hidden"
+                    >
+                      <div className="pb-6">
+                        <p className="text-gray-400 leading-relaxed">{faq.answer}</p>
+                      </div>
+                    </motion.div>
+                  )}
+                </AnimatePresence>
+              </motion.div>
+            );
+          })}
         </motion.div>
       </div>
     </section>

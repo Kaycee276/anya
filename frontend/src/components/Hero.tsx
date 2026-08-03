@@ -4,18 +4,6 @@ import { motion } from "framer-motion";
 export default function Hero() {
   return (
     <section className="relative w-full pt-32 pb-24 md:pt-40 md:pb-32 flex flex-col items-center text-center px-6 overflow-hidden">
-      {/* Background Image with Overlay */}
-      <div 
-        className="absolute inset-0 z-0 opacity-70"
-        style={{
-          backgroundImage: "url('/backend-development-and-programming-programmer-coding-and-testing-program-code-creating-apps.webp')",
-          backgroundSize: "cover",
-          backgroundPosition: "center",
-          backgroundRepeat: "no-repeat"
-        }}
-      />
-      <div className="absolute inset-0 z-0 bg-gradient-to-b from-background/80 via-background/90 to-background" />
-
       <div className="relative z-10 flex flex-col items-center">
         <motion.h1 
           initial={{ opacity: 0, y: 20 }}
@@ -44,7 +32,7 @@ export default function Hero() {
           transition={{ duration: 0.5, delay: 0.2 }}
           className="flex flex-col sm:flex-row gap-4 w-full sm:w-auto"
         >
-          <button className="bg-primary hover:bg-primary-hover text-background text-lg font-semibold py-4 px-8 transition-colors shadow-[0_0_20px_rgba(255,102,0,0.3)] hover:shadow-[0_0_30px_rgba(255,102,0,0.5)]">
+          <button className="bg-primary hover:bg-primary-hover text-background text-lg font-semibold py-4 px-8 transition-colors ">
             Connect GitHub
           </button>
           <button className="bg-surface hover:bg-surface-hover text-white text-lg font-medium py-4 px-8 transition-colors">

@@ -65,7 +65,7 @@ export default function HowItWorks() {
             <motion.div key={index} variants={itemVariants} className="relative">
               {/* Connector line for desktop */}
               {index < steps.length - 1 && (
-                <div className="hidden md:block absolute top-6 left-1/2 w-full h-[1px] bg-gray-800 z-0"></div>
+                <div className="hidden md:block absolute top-6 left-1/2 w-full h-[1px] bg-black z-0"></div>
               )}
               
               <div className="relative z-10 flex flex-col items-center text-center">

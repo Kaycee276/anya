@@ -27,9 +27,18 @@ export default function Navbar() {
       <div className="max-w-6xl mx-auto px-4 h-16 grid grid-cols-3 items-center">
         {/* Left: Links */}
         <div className="hidden md:flex items-center gap-8 text-sm font-medium text-gray-300 justify-start">
-          <Link href="#features" className="hover:text-white transition-colors">Features</Link>
-          <Link href="#how-it-works" className="hover:text-white transition-colors">How it Works</Link>
-          <Link href="#faq" className="hover:text-white transition-colors">FAQ</Link>
+          <Link href="#features" className="relative group hover:text-white transition-colors">
+            Features
+            <span className="absolute left-0 -bottom-1 w-0 h-0.5 bg-primary transition-all duration-300 group-hover:w-full"></span>
+          </Link>
+          <Link href="#how-it-works" className="relative group hover:text-white transition-colors">
+            How it Works
+            <span className="absolute left-0 -bottom-1 w-0 h-0.5 bg-primary transition-all duration-300 group-hover:w-full"></span>
+          </Link>
+          <Link href="#faq" className="relative group hover:text-white transition-colors">
+            FAQ
+            <span className="absolute left-0 -bottom-1 w-0 h-0.5 bg-primary transition-all duration-300 group-hover:w-full"></span>
+          </Link>
         </div>
         
         {/* Mobile menu button */}
