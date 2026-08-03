@@ -13,7 +13,7 @@ export default function Footer() {
     >
       <div className="max-w-6xl w-full mx-auto px-6 ">
         <div className="flex gap-8 text-sm text-gray-500 font-medium">
-          <Link href="#" className="hover:text-gray-300 transition-colors">Documentation</Link>
+          <Link href="/docs" className="hover:text-gray-300 transition-colors">Documentation</Link>
           <Link href="/pro" className="hover:text-gray-300 transition-colors opacity-30 hover:opacity-100">Pro</Link>
         </div>
       </div>

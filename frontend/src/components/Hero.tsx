@@ -48,9 +48,9 @@ export default function Hero() {
               Connect GitHub
             </button>
           )}
-          <button className="bg-surface hover:bg-surface-hover text-white text-lg font-medium py-4 px-8 transition-colors">
+          <Link href="/docs" className="bg-surface hover:bg-surface-hover text-white text-lg font-medium py-4 px-8 transition-colors">
             View Documentation
-          </button>
+          </Link>
         </motion.div>
       </div>
     </section>
