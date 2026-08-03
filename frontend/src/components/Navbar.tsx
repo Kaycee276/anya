@@ -4,10 +4,15 @@ import Link from "next/link";
 import { useState, useEffect } from "react";
 import { Menu, X } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
+import { signIn, signOut, useSession } from "next-auth/react";
+import { usePathname } from "next/navigation";
 
 export default function Navbar() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
+  const { data: session } = useSession();
+  const pathname = usePathname();
+  const isDashboard = pathname === "/dashboard";
 
   useEffect(() => {
     const handleScroll = () => {
@@ -27,28 +32,34 @@ export default function Navbar() {
       <div className="max-w-6xl mx-auto px-4 h-16 grid grid-cols-3 items-center">
         {/* Left: Links */}
         <div className="hidden md:flex items-center gap-8 text-sm font-medium text-gray-300 justify-start">
-          <Link href="#features" className="relative group hover:text-white transition-colors">
-            Features
-            <span className="absolute left-0 -bottom-1 w-0 h-0.5 bg-primary transition-all duration-300 group-hover:w-full"></span>
-          </Link>
-          <Link href="#how-it-works" className="relative group hover:text-white transition-colors">
-            How it Works
-            <span className="absolute left-0 -bottom-1 w-0 h-0.5 bg-primary transition-all duration-300 group-hover:w-full"></span>
-          </Link>
-          <Link href="#faq" className="relative group hover:text-white transition-colors">
-            FAQ
-            <span className="absolute left-0 -bottom-1 w-0 h-0.5 bg-primary transition-all duration-300 group-hover:w-full"></span>
-          </Link>
+          {!isDashboard && (
+            <>
+              <Link href="/#features" className="relative group hover:text-white transition-colors">
+                Features
+                <span className="absolute left-0 -bottom-1 w-0 h-0.5 bg-primary transition-all duration-300 group-hover:w-full"></span>
+              </Link>
+              <Link href="/#how-it-works" className="relative group hover:text-white transition-colors">
+                How it Works
+                <span className="absolute left-0 -bottom-1 w-0 h-0.5 bg-primary transition-all duration-300 group-hover:w-full"></span>
+              </Link>
+              <Link href="/#faq" className="relative group hover:text-white transition-colors">
+                FAQ
+                <span className="absolute left-0 -bottom-1 w-0 h-0.5 bg-primary transition-all duration-300 group-hover:w-full"></span>
+              </Link>
+            </>
+          )}
         </div>
         
         {/* Mobile menu button */}
         <div className="flex md:hidden items-center justify-start">
-          <button 
-            className="text-gray-300 hover:text-white"
-            onClick={() => setIsMenuOpen(!isMenuOpen)}
-          >
-            {isMenuOpen ? <X size={24} /> : <Menu size={24} />}
-          </button>
+          {!isDashboard && (
+            <button 
+              className="text-gray-300 hover:text-white"
+              onClick={() => setIsMenuOpen(!isMenuOpen)}
+            >
+              {isMenuOpen ? <X size={24} /> : <Menu size={24} />}
+            </button>
+          )}
         </div>
 
         {/* Middle: Name */}
@@ -58,15 +69,36 @@ export default function Navbar() {
 
         {/* Right: CTA */}
         <div className="flex items-center gap-4 justify-end">
-          <button className="bg-primary hover:bg-primary-hover text-background text-xs font-semibold py-2 px-4 transition-colors">
-            Connect GitHub
-          </button>
+          {session ? (
+            <>
+              {!isDashboard && (
+                <Link href="/dashboard" className="text-sm font-medium text-gray-300 hover:text-white transition-colors hidden lg:block">
+                  Dashboard
+                </Link>
+              )}
+              <button 
+                onClick={() => signOut({ callbackUrl: "/" })}
+                className="bg-surface hover:bg-surface-hover border border-gray-700 text-white text-xs font-semibold py-2 px-4 transition-colors"
+              >
+                Sign Out
+              </button>
+            </>
+          ) : (
+            <>
+              <button 
+                onClick={() => signIn("github", { callbackUrl: "/dashboard" })}
+                className="bg-primary hover:bg-primary-hover text-background text-xs font-semibold py-2 px-4 transition-colors"
+              >
+                Connect GitHub
+              </button>
+            </>
+          )}
         </div>
       </div>
 
       {/* Mobile Menu Dropdown */}
       <AnimatePresence>
-        {isMenuOpen && (
+        {isMenuOpen && !isDashboard && (
           <motion.div 
             initial={{ opacity: 0, y: -10 }}
             animate={{ opacity: 1, y: 0 }}
@@ -75,33 +107,50 @@ export default function Navbar() {
             className="md:hidden absolute top-16 left-0 w-full bg-background border-b border-gray-800 py-4 px-6 flex flex-col gap-4 shadow-xl"
           >
             <Link 
-              href="#features" 
+              href="/#features" 
               className="text-gray-300 hover:text-white transition-colors py-2 font-medium"
               onClick={() => setIsMenuOpen(false)}
             >
               Features
             </Link>
             <Link 
-              href="#how-it-works" 
+              href="/#how-it-works" 
               className="text-gray-300 hover:text-white transition-colors py-2 font-medium"
               onClick={() => setIsMenuOpen(false)}
             >
               How it Works
             </Link>
             <Link 
-              href="#faq" 
+              href="/#faq" 
               className="text-gray-300 hover:text-white transition-colors py-2 font-medium"
               onClick={() => setIsMenuOpen(false)}
             >
               FAQ
             </Link>
-            <Link 
-              href="/login" 
-              className="text-gray-300 hover:text-white transition-colors py-2 font-medium lg:hidden"
-              onClick={() => setIsMenuOpen(false)}
-            >
-              Sign In
-            </Link>
+            {session ? (
+              <>
+                <Link 
+                  href="/dashboard" 
+                  className="text-gray-300 hover:text-white transition-colors py-2 font-medium lg:hidden"
+                  onClick={() => setIsMenuOpen(false)}
+                >
+                  Dashboard
+                </Link>
+                <button 
+                  onClick={() => signOut({ callbackUrl: "/" })}
+                  className="text-left text-gray-300 hover:text-white transition-colors py-2 font-medium lg:hidden"
+                >
+                  Sign Out
+                </button>
+              </>
+            ) : (
+              <button 
+                onClick={() => signIn("github", { callbackUrl: "/dashboard" })}
+                className="text-left text-gray-300 hover:text-white transition-colors py-2 font-medium lg:hidden"
+              >
+                Sign In
+              </button>
+            )}
           </motion.div>
         )}
       </AnimatePresence>

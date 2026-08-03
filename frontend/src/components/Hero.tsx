@@ -1,7 +1,11 @@
 "use client";
 import { motion } from "framer-motion";
+import { signIn, useSession } from "next-auth/react";
+import Link from "next/link";
 
 export default function Hero() {
+  const { data: session } = useSession();
+
   return (
     <section className="relative w-full pt-32 pb-24 md:pt-40 md:pb-32 flex flex-col items-center text-center px-6 overflow-hidden">
       <div className="relative z-10 flex flex-col items-center">
@@ -32,9 +36,18 @@ export default function Hero() {
           transition={{ duration: 0.5, delay: 0.2 }}
           className="flex flex-col sm:flex-row gap-4 w-full sm:w-auto"
         >
-          <button className="bg-primary hover:bg-primary-hover text-background text-lg font-semibold py-4 px-8 transition-colors ">
-            Connect GitHub
-          </button>
+          {session ? (
+            <Link href="/dashboard" className="bg-primary hover:bg-primary-hover text-background text-lg font-semibold py-4 px-8 transition-colors ">
+              Go to Dashboard
+            </Link>
+          ) : (
+            <button 
+              onClick={() => signIn("github", { callbackUrl: "/dashboard" })}
+              className="bg-primary hover:bg-primary-hover text-background text-lg font-semibold py-4 px-8 transition-colors "
+            >
+              Connect GitHub
+            </button>
+          )}
           <button className="bg-surface hover:bg-surface-hover text-white text-lg font-medium py-4 px-8 transition-colors">
             View Documentation
           </button>

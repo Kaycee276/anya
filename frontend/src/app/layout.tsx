@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Plus_Jakarta_Sans } from "next/font/google";
 import "./globals.css";
 import MouseGlow from "@/components/MouseGlow";
+import { Providers } from "@/components/Providers";
 
 const plusJakartaSans = Plus_Jakarta_Sans({
   subsets: ["latin"],
@@ -24,8 +25,10 @@ export default function RootLayout({
       className={`${plusJakartaSans.variable} h-full antialiased`}
     >
       <body className={`${plusJakartaSans.className} min-h-full flex flex-col`}>
-        <MouseGlow />
-        {children}
+        <Providers>
+          <MouseGlow />
+          {children}
+        </Providers>
       </body>
     </html>
   );
