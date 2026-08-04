@@ -11,7 +11,8 @@ const plusJakartaSans = Plus_Jakarta_Sans({
 
 export const metadata: Metadata = {
   title: "Anya - Backend as an Agent",
-  description: "Connect your frontend repo, and Anya will automatically generate and maintain your backend.",
+  description:
+    "Connect your frontend repo, and Anya will automatically generate and maintain your backend.",
 };
 
 export default function RootLayout({

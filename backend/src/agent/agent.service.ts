@@ -5,7 +5,7 @@ export class AgentService {
   private readonly logger = new Logger(AgentService.name);
   private generationCount = new Map<string, number>();
 
-  async handleWebhook(payload: any) {
+  handleWebhook(payload: { repository?: { full_name?: string } }) {
     this.logger.log(
       `Received webhook for repo: ${payload.repository?.full_name}`,
     );
@@ -42,7 +42,7 @@ export class AgentService {
     };
   }
 
-  async getStatus(repoName: string) {
+  getStatus(repoName: string) {
     return {
       repo: repoName,
       generationsToday: this.generationCount.get(repoName) || 0,

@@ -6,12 +6,12 @@ export class AgentController {
   constructor(private readonly agentService: AgentService) {}
 
   @Post('webhook')
-  async handleWebhook(@Body() payload: any) {
+  handleWebhook(@Body() payload: { repository?: { full_name?: string } }) {
     return this.agentService.handleWebhook(payload);
   }
 
   @Get('status/:repoOwner/:repoName')
-  async getStatus(
+  getStatus(
     @Param('repoOwner') repoOwner: string,
     @Param('repoName') repoName: string,
   ) {

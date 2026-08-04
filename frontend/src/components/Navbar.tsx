@@ -18,13 +18,13 @@ export default function Navbar() {
     const handleScroll = () => {
       setIsScrolled(window.scrollY > 10);
     };
-    
+
     window.addEventListener("scroll", handleScroll);
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
   return (
-    <nav 
+    <nav
       className={`w-full fixed top-0 z-50 transition-all duration-300 ${
         isScrolled ? "bg-background/80 backdrop-blur-md" : "bg-transparent"
       }`}
@@ -34,26 +34,35 @@ export default function Navbar() {
         <div className="hidden md:flex items-center gap-8 text-sm font-medium text-gray-300 justify-start">
           {!isDashboard && (
             <>
-              <Link href="/#features" className="relative group hover:text-white transition-colors">
+              <Link
+                href="/#features"
+                className="relative group hover:text-white transition-colors"
+              >
                 Features
                 <span className="absolute left-0 -bottom-1 w-0 h-0.5 bg-primary transition-all duration-300 group-hover:w-full"></span>
               </Link>
-              <Link href="/#how-it-works" className="relative group hover:text-white transition-colors">
+              <Link
+                href="/#how-it-works"
+                className="relative group hover:text-white transition-colors"
+              >
                 How it Works
                 <span className="absolute left-0 -bottom-1 w-0 h-0.5 bg-primary transition-all duration-300 group-hover:w-full"></span>
               </Link>
-              <Link href="/#faq" className="relative group hover:text-white transition-colors">
+              <Link
+                href="/#faq"
+                className="relative group hover:text-white transition-colors"
+              >
                 FAQ
                 <span className="absolute left-0 -bottom-1 w-0 h-0.5 bg-primary transition-all duration-300 group-hover:w-full"></span>
               </Link>
             </>
           )}
         </div>
-        
+
         {/* Mobile menu button */}
         <div className="flex md:hidden items-center justify-start">
           {!isDashboard && (
-            <button 
+            <button
               className="text-gray-300 hover:text-white"
               onClick={() => setIsMenuOpen(!isMenuOpen)}
             >
@@ -64,7 +73,9 @@ export default function Navbar() {
 
         {/* Middle: Name */}
         <div className="flex items-center justify-center">
-          <Link href="/" className="font-bold text-xl tracking-tight">Anya</Link>
+          <Link href="/" className="font-bold text-xl tracking-tight">
+            Anya
+          </Link>
         </div>
 
         {/* Right: CTA */}
@@ -72,11 +83,14 @@ export default function Navbar() {
           {session ? (
             <>
               {!isDashboard && (
-                <Link href="/dashboard" className="text-sm font-medium text-gray-300 hover:text-white transition-colors hidden lg:block">
+                <Link
+                  href="/dashboard"
+                  className="text-sm font-medium text-gray-300 hover:text-white transition-colors hidden lg:block"
+                >
                   Dashboard
                 </Link>
               )}
-              <button 
+              <button
                 onClick={() => signOut({ callbackUrl: "/" })}
                 className="bg-surface hover:bg-surface-hover border border-gray-700 text-white text-xs font-semibold py-2 px-4 transition-colors"
               >
@@ -85,7 +99,7 @@ export default function Navbar() {
             </>
           ) : (
             <>
-              <button 
+              <button
                 onClick={() => signIn("github", { callbackUrl: "/dashboard" })}
                 className="bg-primary hover:bg-primary-hover text-background text-xs font-semibold py-2 px-4 transition-colors"
               >
@@ -99,29 +113,29 @@ export default function Navbar() {
       {/* Mobile Menu Dropdown */}
       <AnimatePresence>
         {isMenuOpen && !isDashboard && (
-          <motion.div 
+          <motion.div
             initial={{ opacity: 0, y: -10 }}
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: -10 }}
             transition={{ duration: 0.2 }}
             className="md:hidden absolute top-16 left-0 w-full bg-background border-b border-gray-800 py-4 px-6 flex flex-col gap-4 shadow-xl"
           >
-            <Link 
-              href="/#features" 
+            <Link
+              href="/#features"
               className="text-gray-300 hover:text-white transition-colors py-2 font-medium"
               onClick={() => setIsMenuOpen(false)}
             >
               Features
             </Link>
-            <Link 
-              href="/#how-it-works" 
+            <Link
+              href="/#how-it-works"
               className="text-gray-300 hover:text-white transition-colors py-2 font-medium"
               onClick={() => setIsMenuOpen(false)}
             >
               How it Works
             </Link>
-            <Link 
-              href="/#faq" 
+            <Link
+              href="/#faq"
               className="text-gray-300 hover:text-white transition-colors py-2 font-medium"
               onClick={() => setIsMenuOpen(false)}
             >
@@ -129,14 +143,14 @@ export default function Navbar() {
             </Link>
             {session ? (
               <>
-                <Link 
-                  href="/dashboard" 
+                <Link
+                  href="/dashboard"
                   className="text-gray-300 hover:text-white transition-colors py-2 font-medium lg:hidden"
                   onClick={() => setIsMenuOpen(false)}
                 >
                   Dashboard
                 </Link>
-                <button 
+                <button
                   onClick={() => signOut({ callbackUrl: "/" })}
                   className="text-left text-gray-300 hover:text-white transition-colors py-2 font-medium lg:hidden"
                 >
@@ -144,7 +158,7 @@ export default function Navbar() {
                 </button>
               </>
             ) : (
-              <button 
+              <button
                 onClick={() => signIn("github", { callbackUrl: "/dashboard" })}
                 className="text-left text-gray-300 hover:text-white transition-colors py-2 font-medium lg:hidden"
               >
