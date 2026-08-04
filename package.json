@@ -1,0 +1,28 @@
+{
+  "name": "Anya",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "prepare": "husky"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "module",
+  "devDependencies": {
+    "husky": "^9.1.7",
+    "lint-staged": "^17.3.0"
+  },
+  "lint-staged": {
+    "frontend/**/*.{js,jsx,ts,tsx}": [
+      "pnpm --filter frontend run format",
+      "pnpm --filter frontend run lint"
+    ],
+    "backend/**/*.{js,ts}": [
+      "pnpm --filter backend run format",
+      "pnpm --filter backend run lint"
+    ]
+  }
+}
